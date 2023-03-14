@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "es2020",
     "lib": [
       "dom",
       "dom.iterable",
@@ -18,7 +18,13 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "removeComments": false,  
+    "traceResolution": false,
+    "noImplicitAny": false,
+    "noEmitOnError": true,
+    "sourceMap": false,
+    "rootDir": "./src", 
   },
   "include": [
     "src"
