@@ -1,0 +1,84 @@
+.movie-card__wrapper {
+  display: grid;
+  padding: 5px;
+}
+
+.movie-card__info {
+  display: flex;
+  flex-direction: row;
+  align-items: start;
+  gap: 13px;
+}
+
+.movie-card__image {
+  height: 91px;
+  width: 60px;
+}
+
+.movie-card__title {
+  font-size: 20px;
+  line-height: 28px;
+  margin-top: 0;
+  margin-bottom: 7px;
+}
+
+.movie-card__release-date {
+  font-size: 12px;
+  line-height: 22px;
+  color: #827e7e;
+  margin-top: 0;
+  margin-bottom: 7px;
+}
+
+.movie-card__rating {
+  padding: 8px;
+  position: relative;
+}
+
+.movie-card__rating::before {
+  position: absolute;
+  top: 0;
+  left: calc(50% - 16px);
+  border: 2px solid;
+  border-radius: 50%;
+  content: '';
+  width: 30px;
+  height: 30px;
+}
+
+.movie-card__rating-value {
+  display: block;
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.movie-card__short-info-block {
+  flex-grow: 1;
+}
+
+.movie-card__star-rating {
+  margin-left: auto;
+}
+
+.genre-list {
+  list-style-type: none;
+  padding-left: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  gap: 8px;
+}
+
+.genre-list__item {
+  border: 1px solid #d9d9d9;
+  border-radius: 2px;
+  padding: 3px;
+  background-color: #fafafa;
+  display: flex;
+}
+
+.genre-list__item-name {
+  font-size: 12px;
+  line-height: 14px;
+}
