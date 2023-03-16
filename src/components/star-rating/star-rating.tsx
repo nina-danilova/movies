@@ -1,10 +1,9 @@
 import React from 'react';
-import { Rate } from 'antd';
 
-import './star-rating.css';
+import StyledRate from './styled';
 
 function StarRating() {
-  return <Rate allowHalf defaultValue={2.5} count={10} />;
+  return <StyledRate allowHalf defaultValue={2.5} count={10} disabled style={{ fontSize: 16 }} />;
 }
 
 export default StarRating;

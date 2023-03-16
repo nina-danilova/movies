@@ -1,20 +1,14 @@
 import React from 'react';
 
 import TabList from '../tab-list';
-import SearchInput from '../search-input';
-import PaginateList from '../paginate-list';
-import MovieList from '../movie-list';
 
-import './app.css';
+import StyledApp from './styled';
 
 function App() {
   return (
-    <>
-      <SearchInput />
+    <StyledApp>
       <TabList />
-      <MovieList />
-      <PaginateList />
-    </>
+    </StyledApp>
   );
 }
 

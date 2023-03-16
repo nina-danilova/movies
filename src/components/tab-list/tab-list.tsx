@@ -1,23 +1,40 @@
 import React from 'react';
-import { Tabs } from 'antd';
 
-import './tab-list.css';
+import MovieList from '../movie-list';
+import SearchInput from '../search-input';
+import PaginateList from '../paginate-list';
+
+import { StyledTabResult, StyledTabs } from './styled';
 
 function TabList() {
   return (
-    <Tabs
+    <StyledTabs
       defaultActiveKey="1"
       centered
+      tabBarStyle={{
+        marginBottom: 18,
+      }}
       items={[
         {
           label: 'Search',
           key: '1',
-          children: 'Search results',
+          children: (
+            <StyledTabResult>
+              <SearchInput />
+              <MovieList />
+              <PaginateList />
+            </StyledTabResult>
+          ),
         },
         {
           label: 'Rated',
           key: '2',
-          children: 'Rated results',
+          children: (
+            <StyledTabResult>
+              <MovieList />
+              <PaginateList />
+            </StyledTabResult>
+          ),
         },
       ]}
     />

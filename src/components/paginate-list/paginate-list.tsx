@@ -1,10 +1,9 @@
 import React from 'react';
-import { Pagination } from 'antd';
 
-import './paginate-list.css';
+import StyledPagination from './styled';
 
 function PaginateList() {
-  return <Pagination defaultCurrent={1} total={50} />;
+  return <StyledPagination defaultCurrent={1} total={30} pageSize={6} />;
 }
 
 export default PaginateList;
