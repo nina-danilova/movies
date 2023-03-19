@@ -15,25 +15,35 @@ import {
   StyledRating,
 } from './styled';
 
-function MovieCard() {
+interface MovieInfoProps {
+  backdrop_path?: string;
+  title?: string;
+  release_date?: string;
+  vote_average?: number;
+  overview?: string;
+}
+
+interface MovieCardProps {
+  movieInfo: MovieInfoProps;
+}
+
+function MovieCard(props: MovieCardProps) {
+  const { movieInfo } = props;
   return (
     <StyledCard>
-      <StyledImage src="#" height={91} width={60} alt="Movie poster" />
+      <StyledImage src={movieInfo.backdrop_path} height={91} width={60} alt="Movie poster" />
       <StyledInfo>
         <StyledShortInfo>
-          <StyledTitle>The way back</StyledTitle>
-          <StyledReleaseDate>March 5, 2020</StyledReleaseDate>
+          <StyledTitle>{movieInfo.title}</StyledTitle>
+          <StyledReleaseDate>{movieInfo.release_date}</StyledReleaseDate>
           <StyledGenreList>
             <StyledGenreItem>Action</StyledGenreItem>
             <StyledGenreItem>Drama</StyledGenreItem>
           </StyledGenreList>
         </StyledShortInfo>
-        <StyledRating>6.6</StyledRating>
+        <StyledRating>{movieInfo.vote_average}</StyledRating>
       </StyledInfo>
-      <StyledAnnotation>
-        A former basketball all-star, who has lost his wife and family foundation in a struggle with addiction attempts
-        to regain his soul and salvation by becoming the coach of a disparate ethnically mixed high ...
-      </StyledAnnotation>
+      <StyledAnnotation>{movieInfo.overview}</StyledAnnotation>
       <StarRating />
     </StyledCard>
   );

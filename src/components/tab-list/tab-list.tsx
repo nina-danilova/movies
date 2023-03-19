@@ -6,7 +6,12 @@ import PaginateList from '../paginate-list';
 
 import { StyledTabResult, StyledTabs } from './styled';
 
-function TabList() {
+interface TabListProps {
+  movies: object[];
+}
+
+function TabList(props: TabListProps) {
+  const { movies } = props;
   return (
     <StyledTabs
       defaultActiveKey="1"
@@ -21,7 +26,7 @@ function TabList() {
           children: (
             <StyledTabResult>
               <SearchInput />
-              <MovieList />
+              <MovieList movieList={movies} />
               <PaginateList />
             </StyledTabResult>
           ),
@@ -31,7 +36,7 @@ function TabList() {
           key: '2',
           children: (
             <StyledTabResult>
-              <MovieList />
+              <MovieList movieList={movies} />
               <PaginateList />
             </StyledTabResult>
           ),

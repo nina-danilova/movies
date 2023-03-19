@@ -4,15 +4,20 @@ import MovieCard from '../movie-card';
 
 import StyledMovieList from './styled';
 
-function MovieList() {
+interface MovieListProps {
+  movieList: object[];
+}
+
+function MovieList(props: MovieListProps) {
+  const { movieList } = props;
   return (
     <StyledMovieList>
-      <MovieCard />
-      <MovieCard />
-      <MovieCard />
-      <MovieCard />
-      <MovieCard />
-      <MovieCard />
+      {movieList &&
+        movieList.length &&
+        movieList.map((item) => {
+          const cardKey = 1;
+          return <MovieCard key={cardKey} movieInfo={item} />;
+        })}
     </StyledMovieList>
   );
 }
