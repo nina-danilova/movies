@@ -6,8 +6,17 @@ import PaginateList from '../paginate-list';
 
 import { StyledTabResult, StyledTabs } from './styled';
 
+interface MovieInfoProps {
+  backdrop_path: string;
+  title: string;
+  release_date: string;
+  vote_average: number;
+  overview: string;
+  id: number;
+}
+
 interface TabListProps {
-  movies: object[];
+  movies: MovieInfoProps[];
 }
 
 function TabList(props: TabListProps) {

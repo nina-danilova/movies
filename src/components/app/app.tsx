@@ -5,20 +5,30 @@ import getMovieList from '../../utilitary/api';
 
 import StyledApp from './styled';
 
-interface AppState {
-  movieList: object[];
+interface MovieInfoProps {
+  backdrop_path: string;
+  title: string;
+  release_date: string;
+  vote_average: number;
+  overview: string;
+  id: number;
 }
 
-class App extends Component<object, AppState> {
+type AppType = MovieInfoProps | object;
+
+interface AppState {
+  movieList: MovieInfoProps[];
+}
+
+class App extends Component<AppType, AppState> {
   constructor(props) {
     super(props);
     this.state = {
-      movieList: [
-        {
-          title: 'Hi',
-        },
-      ],
+      movieList: [],
     };
+  }
+
+  componentDidMount() {
     getMovieList(
       'https://api.themoviedb.org/3/search/movie?api_key=f45b7772c51af33c0a94a6cb415a0307&query=return'
     ).then((list) => {
