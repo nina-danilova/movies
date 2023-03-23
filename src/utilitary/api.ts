@@ -1,10 +1,10 @@
 async function getMovieList(url: string) {
-  const res = await fetch(url);
-
-  if (!res.ok) {
-    throw new Error(`Could not fetch ${url}, received ${res.status}`);
+  const response = await fetch(url);
+  if (response.status === 200) {
+    const data = await response.json();
+    return data;
   }
-  return res.json();
+  return `Response code ${response.status}`;
 }
 
 export default getMovieList;

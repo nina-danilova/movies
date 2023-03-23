@@ -3,8 +3,9 @@
 Приложение развернуто на vercel - 
 
 Использованы
-- git
+- Git
 - React
 - TS
 - antd
 - styled-components
+- date-fns
