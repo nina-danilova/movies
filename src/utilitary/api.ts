@@ -4,7 +4,7 @@ async function getMovieList(url: string) {
     const data = await response.json();
     return data;
   }
-  return `Response code ${response.status}`;
+  throw Error('response status not 200');
 }
 
 export default getMovieList;

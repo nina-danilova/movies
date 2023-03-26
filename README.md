@@ -9,3 +9,4 @@
 - antd
 - styled-components
 - date-fns
+- lodash

@@ -37,31 +37,32 @@ class TabList extends Component<IType, IState> {
   }
 
   componentDidMount() {
+    this.updateMovieList();
+  }
+
+  onError = () => {
+    this.setState({
+      error: true,
+      loading: false,
+    });
+  };
+
+  updateMovieList = () => {
     getMovieList('https://api.themoviedb.org/3/search/movie?api_key=f45b7772c51af33c0a94a6cb415a0307&query=return')
       .then((data) => {
-        if (typeof data !== 'object') {
-          this.onError();
-        }
         this.setState({
           movieList: data.results,
           loading: false,
         });
       })
       .catch(this.onError);
-  }
-
-  onError() {
-    this.setState({
-      error: true,
-      loading: false,
-    });
-  }
+  };
 
   render() {
     const { movieList, loading, error } = this.state;
 
     const errorMessage = error ? (
-      <Message message="Something is wrong" description="Already fixing" type="error" closable />
+      <Message message="Something is wrong" description="Already fixing" type="error" closable={false} />
     ) : null;
     const hasContent = !(loading || error);
     const spinner = loading ? <Spinner /> : null;
@@ -79,7 +80,7 @@ class TabList extends Component<IType, IState> {
             key: '1',
             children: (
               <StyledTabResult>
-                <SearchInput />
+                <SearchInput onError={this.onError} />
                 {errorMessage}
                 {spinner}
                 {moviesContent}
