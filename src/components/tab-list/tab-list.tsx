@@ -24,6 +24,8 @@ interface IState {
   movieList: MovieInfoProps[];
   loading: boolean;
   error: boolean;
+  currentPage: number;
+  totalResults: number;
 }
 
 class TabList extends Component<IType, IState> {
@@ -33,11 +35,13 @@ class TabList extends Component<IType, IState> {
       movieList: [],
       loading: true,
       error: false,
+      currentPage: 0,
+      totalResults: 0,
     };
   }
 
   componentDidMount() {
-    this.updateMovieList();
+    this.loadMovieList();
   }
 
   onError = () => {
@@ -47,10 +51,16 @@ class TabList extends Component<IType, IState> {
     });
   };
 
-  updateMovieList = () => {
-    getMovieList('https://api.themoviedb.org/3/search/movie?api_key=f45b7772c51af33c0a94a6cb415a0307&query=return')
+  onPageChange = (page: number) => {
+    this.setState({
+      loading: true,
+    });
+    getMovieList(
+      `https://api.themoviedb.org/3/search/movie?api_key=f45b7772c51af33c0a94a6cb415a0307&query=return&page=${page}`
+    )
       .then((data) => {
         this.setState({
+          currentPage: page,
           movieList: data.results,
           loading: false,
         });
@@ -58,8 +68,21 @@ class TabList extends Component<IType, IState> {
       .catch(this.onError);
   };
 
+  loadMovieList = () => {
+    getMovieList('https://api.themoviedb.org/3/search/movie?api_key=f45b7772c51af33c0a94a6cb415a0307&query=return')
+      .then((data) => {
+        this.setState({
+          movieList: data.results,
+          currentPage: data.page,
+          totalResults: data.total_results,
+          loading: false,
+        });
+      })
+      .catch(this.onError);
+  };
+
   render() {
-    const { movieList, loading, error } = this.state;
+    const { movieList, loading, error, currentPage, totalResults } = this.state;
 
     const errorMessage = error ? (
       <Message message="Something is wrong" description="Already fixing" type="error" closable={false} />
@@ -84,7 +107,7 @@ class TabList extends Component<IType, IState> {
                 {errorMessage}
                 {spinner}
                 {moviesContent}
-                <PaginateList />
+                <PaginateList onChange={this.onPageChange} currentPage={currentPage} totalPages={totalResults} />
               </StyledTabResult>
             ),
           },
@@ -96,7 +119,7 @@ class TabList extends Component<IType, IState> {
                 {errorMessage}
                 {spinner}
                 {moviesContent}
-                <PaginateList />
+                <PaginateList onChange={this.onPageChange} currentPage={currentPage} totalPages={totalResults} />
               </StyledTabResult>
             ),
           },
