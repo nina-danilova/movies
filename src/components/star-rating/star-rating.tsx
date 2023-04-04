@@ -2,8 +2,17 @@ import React from 'react';
 
 import StyledRate from './styled';
 
-function StarRating() {
-  return <StyledRate allowHalf defaultValue={2.5} count={10} disabled style={{ fontSize: 16 }} />;
+function StarRating({ onChangeRate, value }) {
+  return (
+    <StyledRate
+      allowHalf
+      defaultValue={0}
+      value={value}
+      count={10}
+      style={{ fontSize: 16 }}
+      onChange={onChangeRate()}
+    />
+  );
 }
 
 export default StarRating;

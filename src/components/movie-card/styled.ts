@@ -69,7 +69,7 @@ const StyledGenreItem = styled.li`
   line-height: 14px;
 `;
 
-const StyledRating = styled.div`
+const StyledRating = styled.div<{ color: string }>`
   padding: 8px;
   position: relative;
 
@@ -77,7 +77,7 @@ const StyledRating = styled.div`
     position: absolute;
     top: 0;
     left: calc(50% - 18px);
-    border: 2px solid;
+    border: 2px solid ${(props) => props.color};
     border-radius: 50%;
     content: '';
     width: 34px;

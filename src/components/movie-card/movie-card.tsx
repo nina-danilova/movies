@@ -24,6 +24,8 @@ interface MovieInfoProps {
   release_date: string;
   vote_average: number;
   overview: string;
+  id: number;
+  rating?: number;
 }
 
 interface MovieCardProps {
@@ -38,6 +40,8 @@ function MovieCard(props: MovieCardProps) {
     release_date: releaseDate,
     vote_average: voteAverage,
     overview,
+    id,
+    rating,
   } = movieInfo;
 
   let date = Date.parse(releaseDate);
@@ -47,6 +51,37 @@ function MovieCard(props: MovieCardProps) {
   const EngbReleaseDate = format(new Date(date), 'MMMM d, yyyy', { locale: enGB });
 
   const truncatedOverview = truncateText(overview);
+  let ratingBorderColor = 'black';
+  if (voteAverage <= 3) {
+    ratingBorderColor = '#E90000';
+  } else if (voteAverage <= 5) {
+    ratingBorderColor = '#E97E00';
+  } else if (voteAverage <= 7) {
+    ratingBorderColor = '#E9D100';
+  } else {
+    ratingBorderColor = '#66E900';
+  }
+
+  async function rateMovie(value: number): Promise<void> {
+    const requestBody = {
+      value,
+    };
+    const response = await fetch(
+      `
+      https://api.themoviedb.org/3/movie/${id}/rating?api_key=f45b7772c51af33c0a94a6cb415a0307&guest_session_id=bc2568d0fc8ee9f297cb4bf6b1bebcf4`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8',
+        },
+        body: JSON.stringify(requestBody),
+      }
+    );
+
+    const result = await response.json();
+    console.log(result);
+  }
+
   return (
     <StyledCard>
       <StyledImage src={backdropPath} height={91} width={60} alt="Movie poster" />
@@ -59,10 +94,10 @@ function MovieCard(props: MovieCardProps) {
             <StyledGenreItem>Drama</StyledGenreItem>
           </StyledGenreList>
         </StyledShortInfo>
-        <StyledRating>{voteAverage}</StyledRating>
+        <StyledRating color={ratingBorderColor}>{voteAverage.toFixed(2)}</StyledRating>
       </StyledInfo>
       <StyledAnnotation>{truncatedOverview}</StyledAnnotation>
-      <StarRating />
+      <StarRating onChangeRate={() => rateMovie} value={rating} />
     </StyledCard>
   );
 }

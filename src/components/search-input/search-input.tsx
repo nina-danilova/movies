@@ -3,7 +3,7 @@ import { Input } from 'antd';
 import _ from 'lodash';
 
 import Message from '../message';
-import getMovieList from '../../utilitary/api';
+import { getMovieList } from '../../utilitary/api';
 
 interface MovieInfoProps {
   backdrop_path: string;
