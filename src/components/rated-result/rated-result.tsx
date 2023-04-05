@@ -4,7 +4,7 @@ import Spinner from '../spinner';
 import MovieList from '../movie-list';
 import Message from '../message';
 import PaginateList from '../paginate-list';
-import { getMovieList, getGuestSession } from '../../utilitary/api';
+import { getMovieList } from '../../utilitary/api';
 
 interface MovieInfoProps {
   backdrop_path: string;
@@ -13,6 +13,8 @@ interface MovieInfoProps {
   vote_average: number;
   overview: string;
   id: number;
+  rating: number;
+  genre_ids: number[];
 }
 
 type RatedResultType = MovieInfoProps | object;
@@ -24,7 +26,6 @@ interface RatedResultState {
   ratedTotalResults: number;
   ratedMovieList: MovieInfoProps[];
   guestSessionId: string;
-  guestSessionExpTime: Date;
 }
 
 class RatedResult extends Component<RatedResultType, RatedResultState> {
@@ -37,7 +38,6 @@ class RatedResult extends Component<RatedResultType, RatedResultState> {
       ratedTotalResults: 0,
       ratedMovieList: [],
       guestSessionId: 'bc2568d0fc8ee9f297cb4bf6b1bebcf4',
-      guestSessionExpTime: new Date('2023-04-04 09:51:39 UTC'),
     };
   }
 
@@ -61,7 +61,6 @@ class RatedResult extends Component<RatedResultType, RatedResultState> {
       `https://api.themoviedb.org/3/guest_session/${guestSessionId}/rated/movies?api_key=f45b7772c51af33c0a94a6cb415a0307&language=en-US&sort_by=created_at.asc&page=${page}`
     )
       .then((data) => {
-        console.log('onRatedPageChange, i have got ', data);
         this.setState({
           ratedCurrentPage: page,
           ratedMovieList: data.results,
@@ -71,6 +70,8 @@ class RatedResult extends Component<RatedResultType, RatedResultState> {
       .catch(this.onError);
   };
   /*
+  guestSessionExpTime: new Date('2023-04-04 09:51:39 UTC')
+
   getGuestSessionId = () => {
     getGuestSession(
       'https://api.themoviedb.org/3/authentication/guest_session/new?api_key=f45b7772c51af33c0a94a6cb415a0307'
@@ -89,19 +90,16 @@ class RatedResult extends Component<RatedResultType, RatedResultState> {
   */
 
   loadRatedMovieList = () => {
-    console.log('started');
-    const { guestSessionId, guestSessionExpTime } = this.state;
-    const now = new Date();
+    const { guestSessionId } = this.state;
     /*
+    const now = new Date();
     if (!guestSessionId || guestSessionExpTime < now) {
       this.getGuestSessionId();
     } */
-    console.log(guestSessionId, guestSessionExpTime);
     getMovieList(
       `https://api.themoviedb.org/3/guest_session/${guestSessionId}/rated/movies?api_key=f45b7772c51af33c0a94a6cb415a0307`
     )
       .then((data) => {
-        console.log(data);
         this.setState({
           ratedMovieList: data.results,
           ratedCurrentPage: data.page,

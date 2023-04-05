@@ -16,4 +16,13 @@ async function getGuestSession(url: string) {
   throw Error('getGuestSessionId - response status not 200');
 }
 
-export { getMovieList, getGuestSession };
+async function getData(url: string) {
+  const response = await fetch(url);
+  if (response.status === 200) {
+    const data = await response.json();
+    return data;
+  }
+  throw Error('getData - response status not 200');
+}
+
+export { getMovieList, getGuestSession, getData };

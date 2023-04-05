@@ -4,6 +4,7 @@ import { enGB } from 'date-fns/locale';
 
 import StarRating from '../star-rating';
 import truncateText from '../../utilitary/truncate-text';
+import { Consumer } from '../context';
 
 import {
   StyledCard,
@@ -25,12 +26,20 @@ interface MovieInfoProps {
   vote_average: number;
   overview: string;
   id: number;
-  rating?: number;
+  rating: number;
+  genre_ids: number[];
 }
 
 interface MovieCardProps {
   movieInfo: MovieInfoProps;
 }
+
+interface GenreListType {
+  id: number;
+  name: string;
+}
+
+type IType = GenreListType[];
 
 function MovieCard(props: MovieCardProps) {
   const { movieInfo } = props;
@@ -42,6 +51,7 @@ function MovieCard(props: MovieCardProps) {
     overview,
     id,
     rating,
+    genre_ids: genreIds,
   } = movieInfo;
 
   let date = Date.parse(releaseDate);
@@ -79,7 +89,7 @@ function MovieCard(props: MovieCardProps) {
     );
 
     const result = await response.json();
-    console.log(result);
+    return result;
   }
 
   return (
@@ -89,10 +99,21 @@ function MovieCard(props: MovieCardProps) {
         <StyledShortInfo>
           <StyledTitle>{title}</StyledTitle>
           <StyledReleaseDate>{EngbReleaseDate}</StyledReleaseDate>
-          <StyledGenreList>
-            <StyledGenreItem>Action</StyledGenreItem>
-            <StyledGenreItem>Drama</StyledGenreItem>
-          </StyledGenreList>
+          <Consumer>
+            {(genreList: IType) => {
+              return (
+                <StyledGenreList>
+                  {genreIds.map((item) => {
+                    const genreFound = genreList.find((genreItem) => genreItem.id === item);
+                    if (genreFound) {
+                      return <StyledGenreItem key={genreIds.indexOf(item)}>{genreFound.name}</StyledGenreItem>;
+                    }
+                    return null;
+                  })}
+                </StyledGenreList>
+              );
+            }}
+          </Consumer>
         </StyledShortInfo>
         <StyledRating color={ratingBorderColor}>{voteAverage.toFixed(2)}</StyledRating>
       </StyledInfo>

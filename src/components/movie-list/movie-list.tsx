@@ -11,6 +11,8 @@ interface MovieProps {
   vote_average: number;
   overview: string;
   id: number;
+  rating: number;
+  genre_ids: number[];
 }
 
 interface MovieListProps {
