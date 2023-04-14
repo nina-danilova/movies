@@ -5,7 +5,7 @@ import MovieCard from '../movie-card';
 import StyledMovieList from './styled';
 
 interface MovieProps {
-  backdrop_path: string;
+  poster_path: string;
   title: string;
   release_date: string;
   vote_average: number;

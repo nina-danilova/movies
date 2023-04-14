@@ -1,6 +1,6 @@
-# kata-movies
+# movies
 
-Приложение развернуто на vercel - https://movies-4wc6x23yt-mau-mau.vercel.app/
+Приложение развернуто на vercel - https://movies-two-steel.vercel.app/
 
 Использованы
 - Git

@@ -7,7 +7,7 @@ import PaginateList from '../paginate-list';
 import { getMovieList } from '../../utilitary/api';
 
 interface MovieInfoProps {
-  backdrop_path: string;
+  poster_path: string;
   title: string;
   release_date: string;
   vote_average: number;

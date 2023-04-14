@@ -18,7 +18,7 @@ const StyledInfo = styled.div`
   grid-column-end: -1;
 `;
 
-const StyledImage = styled.img`
+const StyledImageWrapper = styled.div`
   height: 91px;
   width: 60px;
 
@@ -100,7 +100,7 @@ const StyledAnnotation = styled.p`
 export {
   StyledCard,
   StyledInfo,
-  StyledImage,
+  StyledImageWrapper,
   StyledShortInfo,
   StyledTitle,
   StyledReleaseDate,

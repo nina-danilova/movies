@@ -10,7 +10,13 @@ interface PaginateListProps {
 
 function PaginateList({ onChange, currentPage, totalPages }: PaginateListProps) {
   return (
-    <StyledPagination current={currentPage} pageSize={20} total={totalPages} onChange={(page) => onChange(page)} />
+    <StyledPagination
+      current={currentPage}
+      defaultPageSize={20}
+      showSizeChanger={false}
+      total={totalPages}
+      onChange={(page) => onChange(page)}
+    />
   );
 }
 
