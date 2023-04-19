@@ -1,6 +1,6 @@
 import React from 'react';
 
-import StyledPagination from './styled';
+import { StyledPagination } from './styled';
 
 interface PaginateListProps {
   onChange: (page: number) => void;
@@ -8,7 +8,7 @@ interface PaginateListProps {
   totalPages: number;
 }
 
-function PaginateList({ onChange, currentPage, totalPages }: PaginateListProps) {
+export function PaginateList({ onChange, currentPage, totalPages }: PaginateListProps) {
   return (
     <StyledPagination
       current={currentPage}
@@ -19,5 +19,3 @@ function PaginateList({ onChange, currentPage, totalPages }: PaginateListProps) 
     />
   );
 }
-
-export default PaginateList;

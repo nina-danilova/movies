@@ -1,8 +1,6 @@
 import React from 'react';
 import { Spin } from 'antd';
 
-function Spinner() {
+export function Spinner() {
   return <Spin tip="Loading" />;
 }
-
-export default Spinner;

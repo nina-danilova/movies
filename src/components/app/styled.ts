@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const StyledApp = styled.div`
+export const StyledApp = styled.div`
   margin: 0 auto;
   width: 100%;
   min-width: 320px;
@@ -11,5 +11,3 @@ const StyledApp = styled.div`
   font-size: 14px;
   box-sizing: border-box;
 `;
-
-export default StyledApp;

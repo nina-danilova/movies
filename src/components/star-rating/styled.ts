@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Rate } from 'antd';
 
-const StyledRate = styled(Rate)`
+export const StyledRate = styled(Rate)`
   grid-column-start: 1;
   grid-column-end: -1;
   margin-left: auto;
@@ -10,5 +10,3 @@ const StyledRate = styled(Rate)`
     grid-column-start: 2;
   }
 `;
-
-export default StyledRate;

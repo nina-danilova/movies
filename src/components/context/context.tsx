@@ -1,10 +1,12 @@
 import React from 'react';
 
-interface GenreListType {
-  id: number;
-  name: string;
+interface Genre {
+  id?: number;
+  name?: string;
 }
 
-const { Provider, Consumer } = React.createContext<GenreListType[]>([{ id: 1, name: 'GenreName' }]);
+type GenreList = Genre[];
+
+const { Provider, Consumer } = React.createContext<GenreList>([{}]);
 
 export { Provider, Consumer };

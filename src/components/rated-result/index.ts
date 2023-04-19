@@ -1,3 +1,3 @@
-import RatedResult from './rated-result';
+import { RatedResult } from './rated-result';
 
-export default RatedResult;
+export { RatedResult };

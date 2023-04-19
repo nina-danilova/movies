@@ -1,3 +1,3 @@
-import TabList from './tab-list';
+import { TabList } from './tab-list';
 
-export default TabList;
+export { TabList };

@@ -1,4 +1,4 @@
-const truncateText = (text: string): string => {
+export const truncateText = (text: string): string => {
   let truncatedText = text;
 
   if (!truncatedText) {
@@ -12,5 +12,3 @@ const truncateText = (text: string): string => {
   }
   return `${truncatedText} ...`;
 };
-
-export default truncateText;

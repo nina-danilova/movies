@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 
-import MovieList from '../movie-list';
-import SearchInput from '../search-input';
-import PaginateList from '../paginate-list';
-import RatedResult from '../rated-result';
-import { getMovieList, getData } from '../../utilitary/api';
+import { MovieList } from '../movie-list';
+import { SearchInput } from '../search-input';
+import { PaginateList } from '../paginate-list';
+import { RatedResult } from '../rated-result';
+import { getMovieList, getData } from '../../services/api';
 import { Provider } from '../context';
-import Spinner from '../spinner';
-import Message from '../message';
+import { Spinner } from '../spinner';
+import { Message } from '../message';
+import { apiKey } from '../../utilitary/constants';
 
 import { StyledTabResult, StyledTabs } from './styled';
 
@@ -36,9 +37,10 @@ interface IState {
   currentPage: number;
   totalResults: number;
   genreList: GenreListProps[];
+  lastSearchQuery: string;
 }
 
-class TabList extends Component<IType, IState> {
+export class TabList extends Component<IType, IState> {
   constructor(props) {
     super(props);
     this.state = {
@@ -48,6 +50,7 @@ class TabList extends Component<IType, IState> {
       currentPage: 0,
       totalResults: 0,
       genreList: [],
+      lastSearchQuery: 'return',
     };
   }
 
@@ -64,12 +67,11 @@ class TabList extends Component<IType, IState> {
   };
 
   onPageChange = (page: number) => {
+    const { lastSearchQuery } = this.state;
     this.setState({
       loading: true,
     });
-    getMovieList(
-      `https://api.themoviedb.org/3/search/movie?api_key=f45b7772c51af33c0a94a6cb415a0307&query=return&page=${page}`
-    )
+    getMovieList(`https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${lastSearchQuery}&page=${page}`)
       .then((data) => {
         this.setState({
           currentPage: page,
@@ -80,8 +82,16 @@ class TabList extends Component<IType, IState> {
       .catch(this.onError);
   };
 
+  onSearch = (queryString) => {
+    this.setState({
+      lastSearchQuery: queryString,
+      loading: true,
+    });
+  };
+
   loadMovieList = () => {
-    getMovieList('https://api.themoviedb.org/3/search/movie?api_key=f45b7772c51af33c0a94a6cb415a0307&query=return')
+    const { lastSearchQuery } = this.state;
+    getMovieList(`https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${lastSearchQuery}`)
       .then((data) => {
         this.setState({
           movieList: data.results,
@@ -93,8 +103,17 @@ class TabList extends Component<IType, IState> {
       .catch(this.onError);
   };
 
+  updateMovieList = (data) => {
+    this.setState({
+      movieList: data.results,
+      currentPage: data.page,
+      totalResults: data.total_results,
+      loading: false,
+    });
+  };
+
   loadGenreList = () => {
-    getData('https://api.themoviedb.org/3/genre/movie/list?api_key=f45b7772c51af33c0a94a6cb415a0307')
+    getData(`https://api.themoviedb.org/3/genre/movie/list?api_key=${apiKey}`)
       .then((data) => {
         this.setState({
           genreList: data.genres,
@@ -127,7 +146,7 @@ class TabList extends Component<IType, IState> {
               key: '1',
               children: (
                 <StyledTabResult>
-                  <SearchInput onError={this.onError} />
+                  <SearchInput onError={this.onError} onLoadResults={this.updateMovieList} onSearch={this.onSearch} />
                   {errorMessage}
                   {spinner}
                   {moviesContent}
@@ -150,5 +169,3 @@ class TabList extends Component<IType, IState> {
     );
   }
 }
-
-export default TabList;

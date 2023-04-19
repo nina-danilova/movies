@@ -2,60 +2,59 @@ import React, { Component } from 'react';
 import { Input } from 'antd';
 import _ from 'lodash';
 
-import Message from '../message';
-import { getMovieList } from '../../utilitary/api';
-
-interface MovieInfoProps {
-  poster_path: string;
-  title: string;
-  release_date: string;
-  vote_average: number;
-  overview: string;
-  id: number;
-}
+import { Message } from '../message';
+import { getMovieList } from '../../services/api';
+import { apiKey } from '../../utilitary/constants';
 
 interface SearchInputProps {
   onError: () => void;
+  onLoadResults: (data) => void;
+  onSearch: (queryString) => void;
 }
 
 interface SearchInputState {
-  foundMovieList: MovieInfoProps[] | null;
+  notFound: boolean;
 }
 
-class SearchInput extends Component<SearchInputProps, SearchInputState> {
+export class SearchInput extends Component<SearchInputProps, SearchInputState> {
   constructor(props) {
     super(props);
     this.state = {
-      foundMovieList: null,
+      notFound: false,
     };
   }
 
   getList = (e) => {
-    const { onError } = this.props;
+    const { onError, onLoadResults, onSearch } = this.props;
+    const { notFound } = this.state;
     if (e.target.value) {
-      getMovieList(
-        `https://api.themoviedb.org/3/search/movie?api_key=f45b7772c51af33c0a94a6cb415a0307&query=${e.target.value}`
-      )
+      onSearch(e.target.value);
+      getMovieList(`https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${e.target.value}`)
         .then((data) => {
-          this.setState({
-            foundMovieList: data.results,
-          });
+          if (data.total_results > 0) {
+            if (notFound) {
+              this.setState({
+                notFound: false,
+              });
+            }
+            onLoadResults(data);
+          } else {
+            this.setState({
+              notFound: true,
+            });
+          }
         })
         .catch(onError);
     }
   };
 
   render() {
-    const { foundMovieList } = this.state;
-    const debouncedGetList = _.debounce(this.getList, 2000);
-    let noDataMessage;
-    if (foundMovieList === null) {
-      noDataMessage = null;
-    } else if (foundMovieList.length) {
-      noDataMessage = null;
-    } else {
-      noDataMessage = <Message message="No result" description="Edit your request" type="warning" closable />;
-    }
+    const { notFound } = this.state;
+    const debouncedGetList = _.debounce(this.getList, 1000);
+    const noDataMessage = notFound ? (
+      <Message message="No result" description="Edit your request" type="warning" closable />
+    ) : null;
+
     return (
       <>
         {noDataMessage}
@@ -64,5 +63,3 @@ class SearchInput extends Component<SearchInputProps, SearchInputState> {
     );
   }
 }
-
-export default SearchInput;

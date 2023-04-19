@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 
-import Spinner from '../spinner';
-import MovieList from '../movie-list';
-import Message from '../message';
-import PaginateList from '../paginate-list';
-import { getMovieList } from '../../utilitary/api';
+import { Spinner } from '../spinner';
+import { MovieList } from '../movie-list';
+import { Message } from '../message';
+import { PaginateList } from '../paginate-list';
+import { getMovieList } from '../../services/api';
+import { apiKey } from '../../utilitary/constants';
 
 interface MovieInfoProps {
   poster_path: string;
@@ -17,7 +18,7 @@ interface MovieInfoProps {
   genre_ids: number[];
 }
 
-type RatedResultType = MovieInfoProps | object;
+type RatedResultProps = MovieInfoProps | object;
 
 interface RatedResultState {
   ratedLoading: boolean;
@@ -25,10 +26,11 @@ interface RatedResultState {
   ratedCurrentPage: number;
   ratedTotalResults: number;
   ratedMovieList: MovieInfoProps[];
-  guestSessionId: string;
 }
 
-class RatedResult extends Component<RatedResultType, RatedResultState> {
+export class RatedResult extends Component<RatedResultProps, RatedResultState> {
+  guestSessionId = localStorage.getItem('guestSessionId');
+
   constructor(props) {
     super(props);
     this.state = {
@@ -37,7 +39,6 @@ class RatedResult extends Component<RatedResultType, RatedResultState> {
       ratedCurrentPage: 0,
       ratedTotalResults: 0,
       ratedMovieList: [],
-      guestSessionId: 'bc2568d0fc8ee9f297cb4bf6b1bebcf4',
     };
   }
 
@@ -53,12 +54,11 @@ class RatedResult extends Component<RatedResultType, RatedResultState> {
   };
 
   onRatedPageChange = (page: number) => {
-    const { guestSessionId } = this.state;
     this.setState({
       ratedLoading: true,
     });
     getMovieList(
-      `https://api.themoviedb.org/3/guest_session/${guestSessionId}/rated/movies?api_key=f45b7772c51af33c0a94a6cb415a0307&language=en-US&sort_by=created_at.asc&page=${page}`
+      `https://api.themoviedb.org/3/guest_session/${this.guestSessionId}/rated/movies?api_key=${apiKey}&language=en-US&sort_by=created_at.asc&page=${page}`
     )
       .then((data) => {
         this.setState({
@@ -69,36 +69,9 @@ class RatedResult extends Component<RatedResultType, RatedResultState> {
       })
       .catch(this.onError);
   };
-  /*
-  guestSessionExpTime: new Date('2023-04-04 09:51:39 UTC')
-
-  getGuestSessionId = () => {
-    getGuestSession(
-      'https://api.themoviedb.org/3/authentication/guest_session/new?api_key=f45b7772c51af33c0a94a6cb415a0307'
-    )
-      .then((data) => {
-        if (data.success) {
-          this.setState({
-            guestSessionId: data.guest_session_id,
-            guestSessionExpTime: new Date(data.expires_at),
-          });
-        }
-        console.log('ТЕКУЩИЕ ДАННЫЕ СЕССИИ (rated)', data.guestSessionId, data.guestSessionExpTime);
-      })
-      .catch(this.onError);
-  };
-  */
 
   loadRatedMovieList = () => {
-    const { guestSessionId } = this.state;
-    /*
-    const now = new Date();
-    if (!guestSessionId || guestSessionExpTime < now) {
-      this.getGuestSessionId();
-    } */
-    getMovieList(
-      `https://api.themoviedb.org/3/guest_session/${guestSessionId}/rated/movies?api_key=f45b7772c51af33c0a94a6cb415a0307`
-    )
+    getMovieList(`https://api.themoviedb.org/3/guest_session/${this.guestSessionId}/rated/movies?api_key=${apiKey}`)
       .then((data) => {
         this.setState({
           ratedMovieList: data.results,
@@ -133,5 +106,3 @@ class RatedResult extends Component<RatedResultType, RatedResultState> {
     );
   }
 }
-
-export default RatedResult;

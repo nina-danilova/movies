@@ -1,3 +1,3 @@
-import PaginateList from './paginate-list';
+import { PaginateList } from './paginate-list';
 
-export default PaginateList;
+export { PaginateList };

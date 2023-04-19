@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const StyledMovieList = styled.div`
+export const StyledMovieList = styled.div`
   display: grid;
   gap: 20px;
 
@@ -12,5 +12,3 @@ const StyledMovieList = styled.div`
     grid-template-columns: 1fr 1fr;
   }
 `;
-
-export default StyledMovieList;

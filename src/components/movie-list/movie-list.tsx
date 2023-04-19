@@ -1,8 +1,8 @@
 import React from 'react';
 
-import MovieCard from '../movie-card';
+import { MovieCard } from '../movie-card';
 
-import StyledMovieList from './styled';
+import { StyledMovieList } from './styled';
 
 interface MovieProps {
   poster_path: string;
@@ -19,7 +19,7 @@ interface MovieListProps {
   movieList: MovieProps[];
 }
 
-function MovieList(props: MovieListProps) {
+export function MovieList(props: MovieListProps) {
   const { movieList } = props;
   return (
     <StyledMovieList>
@@ -31,5 +31,3 @@ function MovieList(props: MovieListProps) {
     </StyledMovieList>
   );
 }
-
-export default MovieList;

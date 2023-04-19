@@ -1,8 +1,10 @@
 import React from 'react';
 
-import StyledRate from './styled';
+import { rateMovie } from '../../services/api';
 
-function StarRating({ onChangeRate, value }) {
+import { StyledRate } from './styled';
+
+export function StarRating({ value, id }) {
   return (
     <StyledRate
       allowHalf
@@ -10,9 +12,9 @@ function StarRating({ onChangeRate, value }) {
       value={value}
       count={10}
       style={{ fontSize: 16 }}
-      onChange={onChangeRate()}
+      onChange={(v) => {
+        rateMovie(v, id);
+      }}
     />
   );
 }
-
-export default StarRating;
