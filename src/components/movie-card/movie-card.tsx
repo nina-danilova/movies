@@ -6,8 +6,7 @@ import { truncateText } from '../../utilitary/truncate-text';
 import { Consumer } from '../context';
 import { formatDate } from '../../utilitary/format-date';
 import { getColor } from '../../utilitary/get-color';
-import { findRating } from '../../services/api';
-// import { rateMovie } from '../../services/api';
+import { findRating, getGenreName } from '../../services/api';
 
 import {
   StyledCard,
@@ -61,8 +60,9 @@ export function MovieCard(props: MovieCardProps) {
   const imagePath = posterPath !== null ? `https://image.tmdb.org/t/p/original/${posterPath}` : 'error';
   const formattedDate = releaseDate ? formatDate(releaseDate) : null;
 
-  const ratedId = findRating(id);
-  const movieRating = rating !== undefined ? rating : 1;
+  const userRatedMovie = findRating(id);
+  let movieRating = rating !== undefined ? rating : 0;
+  if (userRatedMovie !== undefined) movieRating = userRatedMovie.value;
 
   return (
     <StyledCard>
@@ -82,9 +82,9 @@ export function MovieCard(props: MovieCardProps) {
               return (
                 <StyledGenreList>
                   {genreIds.map((item) => {
-                    const genreFound = genreList.find((genreItem) => genreItem.id === item);
-                    if (genreFound) {
-                      return <StyledGenreItem key={genreIds.indexOf(item)}>{genreFound.name}</StyledGenreItem>;
+                    const genreName = getGenreName(item, genreList);
+                    if (genreName) {
+                      return <StyledGenreItem key={genreIds.indexOf(item)}>{genreName.name}</StyledGenreItem>;
                     }
                     return null;
                   })}

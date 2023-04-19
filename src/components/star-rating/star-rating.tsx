@@ -4,6 +4,12 @@ import { rateMovie } from '../../services/api';
 
 import { StyledRate } from './styled';
 
+type StarRatingProps = {
+  value: number;
+  id: number;
+};
+
+// export const StarRating: React.FC<StarRatingProps> = ({ value, id }) => {
 export function StarRating({ value, id }) {
   return (
     <StyledRate

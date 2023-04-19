@@ -27,22 +27,27 @@ async function getData(url: string) {
   throw Error(`getData - received ${response.status}`);
 }
 
-const addRating = (movieId: number) => {
-  const ratedMovieIds = localStorage.getItem('ratedMovieIds');
-  const newRatedMoviesList = ratedMovieIds ? JSON.parse(ratedMovieIds) : [];
-  const foundId = newRatedMoviesList.find((item) => item === movieId);
+const addRating = (movieId: number, value: number) => {
+  const ratedMovieList = localStorage.getItem('ratedMovieList');
+  const newRatedMovieList = ratedMovieList ? JSON.parse(ratedMovieList) : [];
+  const foundId = newRatedMovieList.find((item) => item.id === movieId);
   if (foundId) {
-    const index = newRatedMoviesList.indexOf(foundId);
-    newRatedMoviesList.splice(index, 1);
+    const index = newRatedMovieList.indexOf(foundId);
+    newRatedMovieList.splice(index, 1);
   }
-  newRatedMoviesList.push(movieId);
-  localStorage.setItem('ratedMovieIds', JSON.stringify(newRatedMoviesList));
+  const ratedMovieData = {
+    id: movieId,
+    value,
+  };
+  newRatedMovieList.push(ratedMovieData);
+  localStorage.setItem('ratedMovieList', JSON.stringify(newRatedMovieList));
 };
 
-const findRating = (filmId) => {
-  const ratedMovieIds = localStorage.getItem('ratedMovieIds');
-  const ratedIdsList = ratedMovieIds ? JSON.parse(ratedMovieIds) : [];
-  return ratedIdsList.find((item: number) => item === filmId);
+const findRating = (filmId: number) => {
+  const ratedMovieList = localStorage.getItem('ratedMovieList');
+  const ratedList = ratedMovieList ? JSON.parse(ratedMovieList) : [];
+  const result = ratedList.find((item) => item.id === filmId);
+  return result;
 };
 
 async function rateMovie(value: number, id: number): Promise<void> {
@@ -63,8 +68,13 @@ async function rateMovie(value: number, id: number): Promise<void> {
   );
 
   const result = await response.json();
-  addRating(id);
+  addRating(id, value);
   return result;
 }
 
-export { getMovieList, getGuestSession, getData, addRating, findRating, rateMovie };
+const getGenreName = (genreId, genreList) => {
+  const genreName = genreList.find((genreItem) => genreItem.id === genreId);
+  return genreName;
+};
+
+export { getMovieList, getGuestSession, getData, addRating, findRating, rateMovie, getGenreName };
