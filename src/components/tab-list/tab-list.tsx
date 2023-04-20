@@ -12,7 +12,7 @@ import { apiKey } from '../../utilitary/constants';
 
 import { StyledTabResult, StyledTabs } from './styled';
 
-interface MovieInfoProps {
+type MovieInfoProps = {
   poster_path: string;
   title: string;
   release_date: string;
@@ -21,16 +21,16 @@ interface MovieInfoProps {
   id: number;
   rating: number;
   genre_ids: number[];
-}
+};
 
-interface GenreListProps {
+type GenreListProps = {
   id: number;
   name: string;
-}
+};
 
-type IType = MovieInfoProps | object;
+type TabListType = MovieInfoProps | object;
 
-interface IState {
+type TabListState = {
   movieList: MovieInfoProps[];
   loading: boolean;
   error: boolean;
@@ -38,9 +38,9 @@ interface IState {
   totalResults: number;
   genreList: GenreListProps[];
   lastSearchQuery: string;
-}
+};
 
-export class TabList extends Component<IType, IState> {
+export class TabList extends Component<TabListType, TabListState> {
   constructor(props) {
     super(props);
     this.state = {

@@ -7,7 +7,7 @@ import { PaginateList } from '../paginate-list';
 import { getMovieList } from '../../services/api';
 import { apiKey } from '../../utilitary/constants';
 
-interface MovieInfoProps {
+type MovieInfoProps = {
   poster_path: string;
   title: string;
   release_date: string;
@@ -16,17 +16,17 @@ interface MovieInfoProps {
   id: number;
   rating: number;
   genre_ids: number[];
-}
+};
 
 type RatedResultProps = MovieInfoProps | object;
 
-interface RatedResultState {
+type RatedResultState = {
   ratedLoading: boolean;
   ratedError: boolean;
   ratedCurrentPage: number;
   ratedTotalResults: number;
   ratedMovieList: MovieInfoProps[];
-}
+};
 
 export class RatedResult extends Component<RatedResultProps, RatedResultState> {
   guestSessionId = localStorage.getItem('guestSessionId');

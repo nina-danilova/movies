@@ -9,8 +9,7 @@ type StarRatingProps = {
   id: number;
 };
 
-// export const StarRating: React.FC<StarRatingProps> = ({ value, id }) => {
-export function StarRating({ value, id }) {
+export const StarRating: React.FC<StarRatingProps> = ({ value, id }) => {
   return (
     <StyledRate
       allowHalf
@@ -23,4 +22,4 @@ export function StarRating({ value, id }) {
       }}
     />
   );
-}
+};

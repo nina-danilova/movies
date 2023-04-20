@@ -6,15 +6,15 @@ import { Message } from '../message';
 import { getMovieList } from '../../services/api';
 import { apiKey } from '../../utilitary/constants';
 
-interface SearchInputProps {
+type SearchInputProps = {
   onError: () => void;
   onLoadResults: (data) => void;
   onSearch: (queryString) => void;
-}
+};
 
-interface SearchInputState {
+type SearchInputState = {
   notFound: boolean;
-}
+};
 
 export class SearchInput extends Component<SearchInputProps, SearchInputState> {
   constructor(props) {
@@ -50,7 +50,7 @@ export class SearchInput extends Component<SearchInputProps, SearchInputState> {
 
   render() {
     const { notFound } = this.state;
-    const debouncedGetList = _.debounce(this.getList, 1000);
+    const debouncedGetList = _.debounce(this.getList, 1500);
     const noDataMessage = notFound ? (
       <Message message="No result" description="Edit your request" type="warning" closable />
     ) : null;

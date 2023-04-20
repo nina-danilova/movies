@@ -1,4 +1,4 @@
-export function getColor(voteAverage: number) {
+export const getColor = (voteAverage: number) => {
   if (voteAverage <= 3) {
     return '#E90000';
   }
@@ -9,4 +9,4 @@ export function getColor(voteAverage: number) {
     return '#E9D100';
   }
   return '#66E900';
-}
+};

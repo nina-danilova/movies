@@ -21,7 +21,7 @@ import {
   StyledRating,
 } from './styled';
 
-interface MovieInfoProps {
+type MovieInfoProps = {
   poster_path: string;
   title: string;
   release_date: string | null;
@@ -30,20 +30,20 @@ interface MovieInfoProps {
   id: number;
   rating: number;
   genre_ids: number[];
-}
+};
 
-interface MovieCardProps {
+type MovieCardProps = {
   movieInfo: MovieInfoProps;
-}
+};
 
-interface Genre {
+type Genre = {
   id?: number;
   name?: string;
-}
+};
 
 type GenreList = Genre[];
 
-export function MovieCard(props: MovieCardProps) {
+export const MovieCard: React.FC<MovieCardProps> = (props) => {
   const { movieInfo } = props;
   const {
     poster_path: posterPath,
@@ -99,4 +99,4 @@ export function MovieCard(props: MovieCardProps) {
       <StarRating value={movieRating} id={id} />
     </StyledCard>
   );
-}
+};

@@ -2,13 +2,13 @@ import React from 'react';
 
 import { StyledPagination } from './styled';
 
-interface PaginateListProps {
+type PaginateListProps = {
   onChange: (page: number) => void;
   currentPage: number;
   totalPages: number;
-}
+};
 
-export function PaginateList({ onChange, currentPage, totalPages }: PaginateListProps) {
+export const PaginateList: React.FC<PaginateListProps> = ({ onChange, currentPage, totalPages }) => {
   return (
     <StyledPagination
       current={currentPage}
@@ -18,4 +18,4 @@ export function PaginateList({ onChange, currentPage, totalPages }: PaginateList
       onChange={(page) => onChange(page)}
     />
   );
-}
+};

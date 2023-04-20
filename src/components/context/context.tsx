@@ -1,9 +1,9 @@
 import React from 'react';
 
-interface Genre {
+type Genre = {
   id?: number;
   name?: string;
-}
+};
 
 type GenreList = Genre[];
 

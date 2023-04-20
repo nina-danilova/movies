@@ -1,6 +1,6 @@
 import React from 'react';
 import { Spin } from 'antd';
 
-export function Spinner() {
+export const Spinner: React.FC = () => {
   return <Spin tip="Loading" />;
-}
+};

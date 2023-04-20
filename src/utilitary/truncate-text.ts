@@ -1,4 +1,4 @@
-export const truncateText = (text: string): string => {
+export const truncateText = (text: string) => {
   let truncatedText = text;
 
   if (!truncatedText) {

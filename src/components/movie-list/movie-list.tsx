@@ -4,7 +4,7 @@ import { MovieCard } from '../movie-card';
 
 import { StyledMovieList } from './styled';
 
-interface MovieProps {
+type MovieProps = {
   poster_path: string;
   title: string;
   release_date: string;
@@ -13,13 +13,13 @@ interface MovieProps {
   id: number;
   rating: number;
   genre_ids: number[];
-}
+};
 
-interface MovieListProps {
+type MovieListProps = {
   movieList: MovieProps[];
-}
+};
 
-export function MovieList(props: MovieListProps) {
+export const MovieList: React.FC<MovieListProps> = (props) => {
   const { movieList } = props;
   return (
     <StyledMovieList>
@@ -30,4 +30,4 @@ export function MovieList(props: MovieListProps) {
         })}
     </StyledMovieList>
   );
-}
+};

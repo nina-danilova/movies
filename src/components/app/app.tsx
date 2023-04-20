@@ -3,28 +3,11 @@ import { Offline, Online } from 'react-detect-offline';
 
 import { TabList } from '../tab-list';
 import { Message } from '../message';
-import { getGuestSession } from '../../services/api';
-import { apiKey } from '../../utilitary/constants';
+import { getGuestSessionId } from '../../services/api';
 
 import { StyledApp } from './styled';
 
-export function App() {
-  let guestSessionErrorMessage;
-
-  function getGuestSessionId() {
-    getGuestSession(`https://api.themoviedb.org/3/authentication/guest_session/new?api_key=${apiKey}`)
-      .then((data) => {
-        if (data.success) {
-          localStorage.setItem('guestSessionId', data.guest_session_id);
-        }
-      })
-      .catch(() => {
-        guestSessionErrorMessage = (
-          <Message message="Guest session did not get" description="Please, refresh" type="error" closable />
-        );
-      });
-  }
-
+export const App: React.FC = () => {
   if (!localStorage.getItem('guestSessionId')) {
     getGuestSessionId();
   }
@@ -35,11 +18,10 @@ export function App() {
         <Message message="You are offline" description="Check the connection" type="error" closable />
       </Offline>
       <Online>
-        {guestSessionErrorMessage}
         <StyledApp>
           <TabList />
         </StyledApp>
       </Online>
     </>
   );
-}
+};

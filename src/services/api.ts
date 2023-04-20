@@ -27,6 +27,18 @@ async function getData(url: string) {
   throw Error(`getData - received ${response.status}`);
 }
 
+const getGuestSessionId = () => {
+  getGuestSession(`https://api.themoviedb.org/3/authentication/guest_session/new?api_key=${apiKey}`)
+    .then((data) => {
+      if (data.success) {
+        localStorage.setItem('guestSessionId', data.guest_session_id);
+      }
+    })
+    .catch((error) => {
+      throw Error(`getGuestSessionId - received ${error}`);
+    });
+};
+
 const addRating = (movieId: number, value: number) => {
   const ratedMovieList = localStorage.getItem('ratedMovieList');
   const newRatedMovieList = ratedMovieList ? JSON.parse(ratedMovieList) : [];
@@ -77,4 +89,4 @@ const getGenreName = (genreId, genreList) => {
   return genreName;
 };
 
-export { getMovieList, getGuestSession, getData, addRating, findRating, rateMovie, getGenreName };
+export { getMovieList, getGuestSession, getData, addRating, findRating, rateMovie, getGenreName, getGuestSessionId };
